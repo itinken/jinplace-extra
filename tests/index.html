@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="utf-8">
-		<title>jinplace-extra qunit tests</title>
-		<link rel="stylesheet" href="qunit.css">
+<head>
+    <meta charset="utf-8">
+    <title>jinplace-extra qunit tests</title>
+    <link rel="stylesheet" href="qunit.css">
 
-		<script src="jquery-1.10.1.js"></script>
-		<script src="jinplace-0.10.0-pre.1.js"></script>
+    <script src="jquery-1.10.1.js"></script>
+    <script src="jinplace-0.10.0-pre.1.js"></script>
 
-		<script src="../js/checkbox.js"></script>
-		<script src="../js/checkbox_demo.js"></script>
-	</head>
-	<body>
-		<div id="qunit"></div>
+    <script src="../js/checkbox.js"></script>
+    <script src="../js/checkbox_demo.js"></script>
+</head>
+<body>
+<div id="qunit"></div>
 
-		<div id="qunit-fixture">
-            <!-- Used to switch focus away from element under test -->
-            <label for="other">Can set focus here.</label><input id="other" type="text">
-		</div>
-        
-		<script src="qunit.js"></script>
+<div id="qunit-fixture">
+    <!-- Used to switch focus away from element under test -->
+    <label for="other">Can set focus here.</label><input id="other" type="text">
+</div>
 
-        <script>
+<script src="qunit.js"></script>
 
-			// Timeout to wait for blur events in ms.  In case we have to
-			// change it.
-			var BLUR_TIMEOUT = 320;
+<script>
 
-            // sync mock up of the ajax call.
-            $.ajax = function(url, opts) {
-                console.log('AJAX', url, opts.data);
+    // Timeout to wait for blur events in ms.  In case we have to
+    // change it.
+    var BLUR_TIMEOUT = 320;
 
-                var d = $.Deferred();
-                d.done($.proxy(opts.success, opts.context));
-                d.fail($.proxy(opts.error, opts.context));
-                d.resolveWith(opts.context, [opts.data.value]);
-                return d.promise();
-            };
-        </script>
+    // sync mock up of the ajax call.
+    $.ajax = function(url, opts) {
+        console.log('AJAX', url, opts.data);
 
-        <!-- The test modules -->
-		<script src="checkbox.js"></script>
-		<script src="checkbox_demo.js"></script>
-	</body>
+        var d = $.Deferred();
+        d.done($.proxy(opts.success, opts.context));
+        d.fail($.proxy(opts.error, opts.context));
+        d.resolveWith(opts.context, [opts.data.value]);
+        return d.promise();
+    };
+</script>
+
+<!-- The test modules -->
+<script src="checkbox.js"></script>
+<script src="checkbox_demo.js"></script>
+</body>
 </html>
