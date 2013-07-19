@@ -1,0 +1,22 @@
+
+= Simple checkbox =
+
+This is a simple yes/no field editor.
+The editing control is an unlabeled checkbox.
+
+== Submiting ==
+
+Submit: on a blur event.
+
+Send: 1 for checked, 0 for unchecked.
+
+Cancel: can not be cancelled.
+
+== Data ==
+Can set a list of two items. The first represents no/false, and the
+second represents yes/true.
+
+The default list is "No", "Yes".
+
+== Options ==
+Buttons allowed: no. (But perhaps we should allow them?)
