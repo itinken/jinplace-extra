@@ -1,7 +1,11 @@
 /**
+ * A labeled checkbox editor. This was designed to demo as many API
+ * functions as possible and so may or may not be ideal for actual use.
+ * It can be used as a base for other variations on the idea.
+ *
  * @type {{makeField: Function, activate: Function, value: Function, displayValue: Function, blurEvent: Function}}
  */
-$.fn.jinplace.editors.checkbox = {
+$.fn.jinplace.editors.checkbox_demo = {
   // This should make the editing form that will be added.
   // We are using a label containing a checkbox and some text.
   // It returns the label and remembers a number of other values that

@@ -1,5 +1,4 @@
-
-= Extra field editor plugins for jinplace =
+# Extra field editor plugins for jinplace 
 
 This repo holds extra field editors for jinplace.
 
@@ -9,7 +8,8 @@ will be accepted here, no matter how obscure the use-case.
 Widely used plugins may be selected for an 'official' extras package or
 to be added to the main jinplace package.
 
-== Naming conventions ==
+## Naming conventions 
+
 All editors will have a name that includes "extra" or "demo" or some
 other indication that it is not part of the core jinplace.
 A suffix is used to indicate different versions or variations on a

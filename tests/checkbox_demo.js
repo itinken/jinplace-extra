@@ -1,33 +1,45 @@
 
 ( function() {
     var span;
-    module("extra_checkbox", {
+    module("checkbox_demo", {
             setup: function() {
-                span = $('<span data-type="extra_checkbox">Yes</span>');
+                span = $('<span data-type="checkbox_demo">Yes</span>');
             }
         }
     );
 
     var qfix = $("#qunit-fixture");
-//    function cb_span() { return $('<span data-type="extra_checkbox">Yes</span>'); }
 
-    test("Default checked for yes", 2, function() {
+	test("Checkbox and text present after click", 2, function() {
+		span.appendTo(qfix).jinplace();
+
+		span.click();
+		var inp = span.find("input");
+		equal(inp.length, 1, 'input present');
+		equal(span.text(), "Yes", "text present");
+	});
+
+    test("Default checked for yes", 4, function() {
         span.appendTo(qfix).jinplace();
 
 		equal(span.text(), "Yes");
 
 		span.click();
 		var inp = span.find('input');
+		ok(inp.length);
+
 		equal(inp.prop('checked'), true);
+		equal(span.text(), "Yes");
 	});
 
-    test("Default unchecked for No", 1, function() {
+    test("Default unchecked for No", 2, function() {
         span.text('No').appendTo(qfix).jinplace();
 
         span.click();
 
         var inp = span.find('input');
         equal(inp.prop('checked'), false);
+		equal(span.text(), "No");
     });
 
     test("After blur, no checkbox, correct text", 3, function() {

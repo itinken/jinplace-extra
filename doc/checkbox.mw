@@ -1,14 +1,14 @@
 
-= Simple checkbox =
+= extra_checkbox : simple checkbox =
 
 This is a simple yes/no field editor.
 The editing control is an unlabeled checkbox.
 
-== Submiting ==
+== Features ==
 
 Submit: on a blur event.
 
-Send: 1 for checked, 0 for unchecked.
+Send: value is 1 for checked, 0 for unchecked.
 
 Cancel: can not be cancelled.
 

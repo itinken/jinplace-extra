@@ -1,0 +1,25 @@
+
+= checkbox_demo: labeled check box =
+
+This is an editor for a true/false data field where the editor is a
+checkbox that is labeled with the yes/no text.
+
+When the checkbox is toggled, the text changes to show the text that
+would be shown when the editor is removed.
+
+== Features ==
+
+Submit: on a blur event.
+
+Send: value is 1 for checked, 0 for unchecked.
+
+Cancel: can not be cancelled.
+
+== Data ==
+Can set a list of two items. The first represents no/false, and the
+second represents yes/true.
+
+The default list is "No", "Yes".
+
+== Options ==
+Buttons allowed: no.
