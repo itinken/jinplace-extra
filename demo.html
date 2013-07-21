@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Demo of jinplace extra field editors</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!-- The following groupd of js and css files are just for the demo -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.1/knockout-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushXml.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrushJScript.min.js"></script>
+
+    <link rel=stylesheet href="http://bitbucket.com/itinken/jinplace/wiki/css/shCore.css">
+    <link rel=stylesheet href="http://bitbucket.com/itinken/jinplace/wiki/css/shCoreDefault.css">
+
+    <!-- These are the required files. Need jQuery 1.7+ -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="tests/jinplace-0.10.1-pre.js"></script>
+
+    <script src="dist/all_extras.js"></script>
+
+    <style>
+        html {
+            font-size: 100%;
+            overflow-y: scroll;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body, form, textarea, button, input, select {
+            margin: 0 2px;
+            font-size: 16px;
+            font-family: arial, helvetica, sans-serif;
+        }
+        h1 {
+            font-size: 1.4em;
+            color: darkred;
+        }
+        h2 {
+            font-size: 1.2em;
+            color: #eb754a;
+        }
+
+            /* Make lists consistent */
+        ul, ol { margin-left: 0; }
+
+        ol { padding-left: 2em; }
+        ul {
+            list-style: square;
+            padding-left: 1em;
+        }
+
+        li {
+            padding: 3px 0;
+        }
+        li p {
+            padding:0;
+            margin:8px 0 0 0;
+        }
+
+
+        table {max-width: 900px;}
+        th {
+            background-color: #eee;;
+        }
+        td {
+            background-color: #f5f5f5;
+        }
+        .editable-display-box {
+            background: white;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        .editable {
+            border-bottom: 1px dashed #84ae84;
+        }
+
+        #page {
+            max-width: 900px;
+            margin: 0 auto 0 auto;
+        }
+        .demo {
+            overflow: hidden;
+            border-top: 1px solid #ccc;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;;
+            margin-bottom: 10px;
+            clear: both;
+        }
+        .description {
+            overflow: hidden;
+        }
+        .example {
+            padding: 1px;
+            background-color: #dce6ea;
+            white-space: pre;
+        }
+        .syntaxhighlighter {
+            margin: 2px 0;
+        }
+        .try-it {
+            background-color: #dce6ea;
+            padding-bottom: 20px;
+        }
+        .try-it > p, .try-it > h2 {
+            margin-left: 10px;;
+        }
+        .description > p { margin-right: 10px;}
+        .warn {
+            color: #ac0000;
+        }
+        input.short {
+            width: 8em;
+        }
+        .button {
+            display: inline;
+            font-size: 13px;
+            padding: 2px 10px;
+            margin: 0 0 0 3px;
+            border: solid 1px #eee;
+            color: #000000;
+            font-weight: bold;
+            background: #98b095;
+            text-decoration: none;
+            cursor: pointer;
+            -moz-border-radius: 8px;
+            -webkit-border-radius: 8px;
+            border-radius: 8px;
+            background: -webkit-linear-gradient(top, #bbdcb6, #a0b0a0);
+            background: -moz-linear-gradient(top, #bbdcb6, #a0b0a0);
+            background: -ms-linear-gradient(top, #bbdcb6, #a0b0a0);
+            background: -o-linear-gradient(top, #bbdcb6, #a0b0a0);
+        }
+
+        @media all and (min-width: 1270px) {
+            #page {
+                max-width: 1250px;
+                width: 1250px;
+            }
+
+            .description {
+                float: left;
+                width: 900px;
+            }
+
+            .example {
+                margin-right: 20px;
+            }
+
+            .try-it {
+                float: left;
+                width: 350px;
+                padding-bottom: 1000px;
+                margin-bottom: -1000px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+<div id="page">
+
+<h1>Demo of the jinplace extra field editors</h1>
+<div id="invalid" class="warn">
+    Error: Something has gone wrong and at least one of the required javascript libraries has not loaded.
+    Please check this before going further.
+</div>
+<!--[if lte IE 8]>
+<div class="warn">
+    Jinplace and this demo are fully functional on IE6-8.
+    The demo does not look as good on the earlier browsers.
+</div>
+<![endif]-->
+
+<div class="description">
+    <p>In this demo there is no actual communication with a remote server.
+        Instead all load and save operations take place on a mini database within the
+        page itself.
+        As you work through the examples and make changes they will appear in
+        the table below.
+    </p>
+</div>
+<div style="float:left; margin-right: 20px;">
+    <p>See also <a class="button" href="https://bitbucket.org/itinken/jinplace/wiki/Documentation">Documentation</a> and <a class="button" href="https://bitbucket.org/itinken/jinplace/downloads">Downloads</a></p>
+</div>
+<table>
+    <caption>The database. See your changes here.</caption>
+    <tr>
+        <th>Object</th>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Favourites</th>
+        <th>Direction</th>
+        <th>Cats</th>
+    </tr>
+    <tr>
+        <td>person</td>
+        <td><span data-bind="text: person.firstname"></span>
+        <td><span data-bind="text: person.lastname"></span>
+        <td> <div style="width: 200px" data-bind="text: person.favourites"></div>
+        <td><span data-bind="text: person.direction"></span>
+        <td><span data-bind="text: person.cats"></span>
+    </tr>
+    <tr>
+        <td>person2</td>
+        <td><span data-bind="text: person2.firstname"></span>
+        <td><span data-bind="text: person2.lastname"></span>
+        <td><div style="width: 200px" data-bind="text: person2.favourites"></div>
+        <td><span data-bind="text: person2.direction"></span>
+        <td><span data-bind="text: person2.cats"></span>
+    </tr>
+</table>
+<p>
+
+<div id="example-extra_checkbox" class="demo">
+    <div class="description">
+        <h2>Simple checkbox</h2>
+        This is a simple control for a yes/no or true/false item of data.
+        <ul>
+            <li>Control has type 'extra_checkbox'
+            <li>Unlabeled checkbox
+            <li>The text can be changed with data-data</li>
+            <li>Submit by clicking elsewhere
+        </ul>
+
+        <div class="example">
+            Likes cats: &lt;span class="editable" data-url="/internal/person/cats"
+                              data-data='["Not much", "Yes!"]'
+                              data-type="extra_checkbox">Yes!&lt;/span>
+        </div>
+    </div>
+
+    <div class="try-it">
+        <p>Click on 'Yes!' to edit
+    </div>
+</div>
+<div id="example-checkbox_demo" class="demo">
+    <div class="description">
+        <h2>Labeled checkbox</h2>
+        <p>This is a control for a yes/no or true/false item of data, it consists of
+        a checkbox and a label with the current value.
+        <p>It was written as an API demo.</p>
+        <ul>
+            <li>Control has type 'extra_checkbox'
+            <li>Labeled checkbox
+            <li>Submit by clicking elsewhere
+        </ul>
+
+        <div class="example">
+            Likes cats: &lt;span class="editable" data-url="/internal/person/cats"
+                              data-data='["A little", "Lots"]'
+                              data-type="checkbox_demo">Lots&lt;/span>
+        </div>
+    </div>
+
+    <div class="try-it">
+        <p>Click to edit
+    </div>
+</div>
+
+
+<!-- Start of scripts -->
+<script>
+    // Just in case there is no console...
+    if (!window.console) {
+        var console = {
+            log: function () {
+                var a = arguments;
+            }
+        }
+    }
+
+    $(function() {
+        // Internal 'server' to keep track of the data that is submitted.
+
+        // Our database...
+        var db = {
+            person: {
+                firstname: ko.observable('John'),
+                lastname: ko.observable('Smith'),
+                favourites: ko.observable('Wild geese that fly with the moon on their wings'),
+                direction: ko.observable('E'),
+                cats: ko.observable(1)
+            },
+
+            person2: {
+                firstname: ko.observable('Mary'),
+                lastname: ko.observable('Jones'),
+                favourites: ko.observable(''),
+                direction: ko.observable('W'),
+                cats: ko.observable(0)
+            },
+
+            allowedDirections: [
+                ['N', 'North'], ['NW', 'North West'], ['NE', 'North East'],
+                ['E', 'East'], ['W', 'West'],
+                ['S', 'South'], ['SW', 'South West'], ['SE', 'South East']
+            ]
+        };
+        ko.applyBindings(db);
+
+        // Redefine the $.ajax call to keep the data local to the page.
+        $.ajax = function (url, data) {
+            var params = data.data || {};
+
+            console.log("The URL", url, data.type);
+            console.log("The data", data.type, params);
+
+            // The value that was passed in if this is a post
+            var value = params.value;
+
+            var m = url.match(new RegExp('/internal(?:/(\\w*)(?:/(\\w*))?)?'));
+            var object = m[1] || params.object;
+            var field = m[2] || params.attribute;
+            if (data.type == 'post') {
+                // set the database value
+                db[object][field](value);
+
+            } else {
+                value = db[object][field]();
+
+                if (field == 'direction') {
+                    var dir = $.extend(true, [], db.allowedDirections);
+                    $.each(dir, function(i, opt) {
+                        if (opt[0] == value) {
+                            opt[2] = 1;
+                        }
+                    });
+                    value = JSON.stringify(dir);
+                }
+            }
+
+            var d = $.Deferred();
+            // Add any success callback
+            if (data.success)
+                d.done($.proxy(data.success, data.context));
+            // Add any failure callback
+            if (data.error)
+                d.fail($.proxy(data.error, data.context));
+
+            // We have the data already so resolve the promise and return it
+            d.resolveWith(data.context, [value]);
+            return d.promise();
+        };
+    });
+</script>
+
+<script>
+    // Arrange to syntax highlight everything and make real working code from the text of the
+    // example.
+    $(function() {
+        $('.example').each(function () {
+            var $this = $(this);
+
+            var exampleText = $this.text();
+            var syntax = $('<pre class="brush: js; html-script:true"></pre>');
+
+            // We need the actual text inside the example box so that it can be syntax highlighted,
+            // so we convert all '<' to entities.
+            syntax.text(exampleText);
+            $this.html(syntax);
+
+            // Parse the example into html and place it in the try it out column. Voila guaranteed to
+            // be the same as the visible example with no repetition.
+            // Note: parseHTML is only available in jQ 1.8+. Use it if available
+            // otherwise fall back to using jQuery(). This demo currently runs
+            // with jQ 1.7
+            var html;
+            if ($.parseHTML)
+                html = $.parseHTML(exampleText, null, true);
+            else
+                html = $(exampleText);
+            var try_it = $this.parent().parent().find('.try-it');
+
+            var heading = $('<h2>Try it out</h2>');
+            try_it.prepend(heading);
+
+            var dbox = $('<div class="editable-display-box"/>');
+            dbox.html(html);
+            try_it.append(dbox);
+        });
+
+        $('.editable').jinplace();
+        $('.editable2').jinplace({
+            url: '/internal/person2',
+            placeholder: '[Edit]'
+        });
+        $('.editable3').jinplace({
+            url: '/internal/person2',
+            loadurl: '/internal/person2'
+        });
+    });
+</script>
+<script>
+    $(function() {
+        SyntaxHighlighter.defaults.toolbar = false;
+        SyntaxHighlighter.defaults['tab-size'] = 2;
+        SyntaxHighlighter.all();
+    });
+</script>
+<script>
+    // If we got here without errors then hide the warning box.
+    if (jQuery && ko && jQuery.fn.jinplace) {
+        $('#invalid').hide();
+    }
+</script>
+</div>
+</body>
