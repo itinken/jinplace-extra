@@ -3,7 +3,7 @@
  *
  * @type {{makeField: Function, value: Function, displayValue: Function}}
  */
-$.fn.jinplace.editors.extra_checkbox = {
+$.fn.jinplace.editors['extra:checkbox'] = {
 
 	makeField: function(element, data) {
 		this.blurAction = 'submit';

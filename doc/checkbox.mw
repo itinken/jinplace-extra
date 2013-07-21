@@ -1,5 +1,5 @@
 
-= extra_checkbox : simple checkbox =
+= extra:checkbox : simple checkbox =
 
 This is a simple yes/no field editor.
 The editing control is an unlabeled checkbox.

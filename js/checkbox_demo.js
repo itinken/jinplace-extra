@@ -5,7 +5,7 @@
  *
  * @type {{makeField: Function, activate: Function, value: Function, displayValue: Function, blurEvent: Function}}
  */
-$.fn.jinplace.editors.checkbox_demo = {
+$.fn.jinplace.editors['extra:checkbox_demo'] = {
 	// This should make the editing form that will be added.
 	// We are using a label containing a checkbox and some text.
 	// It returns the label and remembers a number of other values that

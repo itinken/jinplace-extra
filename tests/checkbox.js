@@ -1,16 +1,14 @@
 
 ( function() {
 	var span;
-	module("extra_checkbox", {
+	module("extra:checkbox", {
 				setup: function() {
-					span = $('<span data-type="extra_checkbox">Yes</span>');
+					span = $('<span data-type="extra:checkbox">Yes</span>');
 				}
 			}
 	);
 
 	var qfix = $("#qunit-fixture");
-//    function cb_span() { return $('<span data-type="extra_checkbox">Yes</span>'); }
-
 	test("Default checked for yes", 2, function() {
 		span.appendTo(qfix).jinplace();
 

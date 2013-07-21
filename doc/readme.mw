@@ -10,11 +10,19 @@ Widely used plugins may be selected for an 'official' extras package or
 to be added to the main jinplace package.
 
 == Naming conventions ==
-All editors will have a name that includes "extra" or "demo" or some
-other indication that it is not part of the core jinplace.
-A suffix is used to indicate different versions or variations on a
+All editors will have a name that does not and cannot clash with a name
+in the main jinplace project.  This is achieved at the moment by
+starting the name with 'extra:'
+A suffix may be used to indicate different versions or variations on a
 similar editor control.
 
-Words are separated by underscores.
-
 The rules are loose at the moment but may firm up as more are added.
+
+Since a colon is not a valid character for an identifier, you must use
+array notation to define it. For example:
+
+<pre code=js>
+$.fn.jinplace.editors['extra:checkbox'] = {
+    // implementation here...
+}
+</pre>

@@ -3,7 +3,7 @@
 	var span;
 	module("checkbox_demo", {
 				setup: function() {
-					span = $('<span data-type="checkbox_demo">Yes</span>');
+					span = $('<span data-type="extra:checkbox_demo">Yes</span>');
 				}
 			}
 	);
