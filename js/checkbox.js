@@ -4,10 +4,9 @@
  * @type {{makeField: Function, value: Function, displayValue: Function}}
  */
 $.fn.jinplace.editors['extra:checkbox'] = {
+	blurAction: 'ignore',
 
 	makeField: function(element, data) {
-		this.blurAction = 'submit';
-
 		var choices;
 
 		if (data.charAt(0) == '[')
@@ -18,14 +17,21 @@ $.fn.jinplace.editors['extra:checkbox'] = {
 
 		this.choices = choices;
 
-		var f = $('<input type=checkbox>');
-		f.on('click', function(ev) {ev.stopPropagation();});
+		var field = $('<input type=checkbox>');
+
+		// Set up events. Complicated by chrome/safari not dealing with focus on
+		// checkbox elements as other browsers do.
+		field
+				.on('click', function(ev) {ev.stopPropagation();})
+				.on('change', function(ev) {field.focus()})
+		;
+		this.blurEvent(field, field, 'submit');
 
 		// Set the checkbox to the checked state if the text matches the 'true' value.
 		var text = $.trim(element.text());
-		f.attr('checked', text == choices[1]);
+		field.attr('checked', text == choices[1]);
 
-		return f;
+		return field;
 	},
 
 	value: function() {
