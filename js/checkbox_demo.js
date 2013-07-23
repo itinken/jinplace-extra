@@ -6,6 +6,8 @@
  * @type {{makeField: Function, activate: Function, value: Function, displayValue: Function, blurEvent: Function}}
  */
 $.fn.jinplace.editors['extra:checkbox_demo'] = {
+	blurAction: 'ignore', // don't add default action
+
 	// This should make the editing form that will be added.
 	// We are using a label containing a checkbox and some text.
 	// It returns the label and remembers a number of other values that
@@ -54,6 +56,7 @@ $.fn.jinplace.editors['extra:checkbox_demo'] = {
 					// Get the checked state and set the text to match it
 					var checked = self.inputField.prop('checked');
 					self.textNode.text(self.choices[checked ? 1 : 0]);
+					field.focus(); // re-focus for chrome
 				});
 
 		this.blurEvent(this.inputField, this.label, 'submit');
