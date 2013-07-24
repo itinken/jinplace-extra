@@ -243,7 +243,7 @@
 
 			if ($.isPlainObject(value)) {
 				$.extend(params, value);
-			} else if (value !== null && value !== undefined) {
+			} else if (value !== undefined) {
 				params.value = value;
 			}
 
@@ -338,9 +338,9 @@
 			var element = this.element;
 
 			if (!data)
-				data = this.placeholder;
+				data = this.opts.placeholder;
 
-			if (this.textOnly) {
+			if (this.opts.textOnly) {
 				element.text(data);
 			} else {
 				element.html(data);

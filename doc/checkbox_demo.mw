@@ -1,5 +1,5 @@
 
-= extra:checkbox_demo: labeled check box =
+= Editor extra:checkbox_demo - labeled check box =
 
 This is an editor for a true/false data field where the editor is a
 checkbox that is labeled with the yes/no text.

@@ -3,11 +3,14 @@
 
 This repo holds extra field editors for jinplace.
 
+See the [http:// demo] of all the extras.
+
 It is a forum for experimentation and discussion. Any contribution
 will be accepted here, no matter how obscure the use-case.
 
-Widely used plugins may be selected for an 'official' extras package or
-to be added to the main jinplace package.
+Widely used and properly documented and tested plugins may be selected
+for an extras package or to be added to the main jinplace
+package.
 
 == Naming conventions ==
 All editors will have a name that does not and cannot clash with a name
