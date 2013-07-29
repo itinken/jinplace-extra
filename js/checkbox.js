@@ -1,7 +1,7 @@
 /**
  * A plain checkbox implementation.
  *
- * @type {{makeField: Function, value: Function, displayValue: Function}}
+ * @type {editorBase}
  */
 $.fn.jinplace.editors['extra:checkbox'] = {
 	blurAction: 'ignore',
@@ -19,12 +19,33 @@ $.fn.jinplace.editors['extra:checkbox'] = {
 
 		var field = $('<input type=checkbox>');
 
+		var ios = navigator.userAgent.match(/(ipad|ipod|iphone)/i);
+		var stopSubmit = false;
+
 		// Set up events. Complicated by chrome/safari not dealing with focus on
 		// checkbox elements as other browsers do.
-		field
-				.on('click', function(ev) {ev.stopPropagation();})
-				.on('change', function(ev) {field.focus()})
+		field   .on('click', function(ev) {ev.stopPropagation(); })
+				.on('change', function(ev) {field.focus(); })
 		;
+
+		if (ios) {
+			field.on('touchstart', function(ev) {
+				stopSubmit = true;
+				setTimeout(function () {
+					stopSubmit = false;
+				}, 300);
+
+			});
+
+			$(document)
+					.off('touchstart.jip')
+					.on('touchstart.jip', function(ev) {
+						if (!stopSubmit)
+							element.find('form').trigger('submit');
+					});
+		}
+
+
 		this.blurEvent(field, field, 'submit');
 
 		// Set the checkbox to the checked state if the text matches the 'true' value.
@@ -39,6 +60,10 @@ $.fn.jinplace.editors['extra:checkbox'] = {
 	},
 
 	displayValue: function(data) {
-		return this.choices[data ? 1 : 0];
+		return this.choices[data != '0' ? 1 : 0];
+	},
+
+	finish: function() {
+		$(document).off('touchstart.jip');
 	}
 };
