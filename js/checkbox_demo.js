@@ -3,7 +3,7 @@
  * functions as possible and so may or may not be ideal for actual use.
  * It can be used as a base for other variations on the idea.
  *
- * @type {{makeField: Function, activate: Function, value: Function, displayValue: Function, blurEvent: Function}}
+ * @type {editorBase}
  */
 $.fn.jinplace.editors['extra:checkbox_demo'] = {
 	blurAction: 'ignore', // don't add default action

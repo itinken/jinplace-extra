@@ -21,6 +21,12 @@
 <script src="qunit.js"></script>
 
 <script>
+    if (typeof console == 'undefined') {
+        var console = {
+            /** @param {...(*)} var_args */
+            log: function(var_args) {}
+        }
+    }
 
     // Timeout to wait for blur events in ms.  In case we have to
     // change it.
@@ -31,9 +37,7 @@
         console.log('AJAX', url, opts.data);
 
         var d = $.Deferred();
-        d.done($.proxy(opts.success, opts.context));
-        d.fail($.proxy(opts.error, opts.context));
-        d.resolveWith(opts.context, [opts.data.value]);
+        d.resolveWith(undefined, [opts.data.value]);
         return d.promise();
     };
 </script>
