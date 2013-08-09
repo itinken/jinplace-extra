@@ -1,3 +1,5 @@
 syntax: glob
 
 .*.sw?
+node_modules
+dist
