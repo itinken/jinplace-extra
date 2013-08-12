@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 
 	grunt.initConfig({
 		primary: primary,
-	 	experimental: primary.concat(experimental),
+		experimental: primary.concat(experimental),
 
 		concat: {
 			options: {
@@ -20,6 +20,11 @@ module.exports = function(grunt) {
 			},
 
 			alldist: {
+				options: {
+					banner: '/** @preserve ALL PLUGINS INCLUDING EXPERIMENTAL ONES\n'
+							+ ' * MIT Licence\n'
+							+ '*/\n'
+				},
 				src: "<%= experimental %>",
 				dest: "dist/jinplace-extra-all.js"
 			}
