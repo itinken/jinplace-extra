@@ -22,16 +22,14 @@ $.fn.jinplace.editors['extra:checkbox'] = {
 
 		var field = $('<input type=checkbox>');
 
-		var ios = navigator.userAgent.match(/(ipad|ipod|iphone)/i);
-		var stopSubmit = false;
-
 		// Set up events. Complicated by chrome/safari not dealing with focus on
 		// checkbox elements as other browsers do.
 		field   .on('click', function(ev) {ev.stopPropagation(); })
 				.on('change', function(ev) {field.focus(); })
 		;
 
-		if (ios) {
+		if (navigator.userAgent.match(/(ipad|ipod|iphone)/i)) {
+			var stopSubmit = false;
 			field.on('touchstart', function(ev) {
 				stopSubmit = true;
 				setTimeout(function () {
@@ -47,7 +45,6 @@ $.fn.jinplace.editors['extra:checkbox'] = {
 							element.find('form').trigger('submit');
 					});
 		}
-
 
 		this.blurEvent(field, field, 'submit');
 
@@ -120,8 +117,8 @@ $.fn.jinplace.editors['extra:checkbox_demo'] = {
 
 		field.focus();
 
-		this.label
-				.on('click', function (ev) {
+		var label = this.label;
+		label   .on('click', function (ev) {
 					// Prevent the click from going any further
 					ev.stopPropagation();
 				})
@@ -132,7 +129,25 @@ $.fn.jinplace.editors['extra:checkbox_demo'] = {
 					field.focus(); // re-focus for chrome
 				});
 
-		this.blurEvent(this.inputField, this.label, 'submit');
+		if (navigator.userAgent.match(/(ipad|ipod|iphone)/i)) {
+			var stopSubmit = false;
+			label.on('touchstart', function (ev) {
+				stopSubmit = true;
+				setTimeout(function () {
+					stopSubmit = false;
+				}, 300);
+
+			});
+
+			$(document)
+					.off('touchstart.jip')
+					.on('touchstart.jip', function (ev) {
+						if (!stopSubmit)
+							form.trigger('submit');
+					});
+		}
+
+		this.blurEvent(this.inputField, label, 'submit');
 	},
 
 	// Returns the value that should be sent to the server.
@@ -148,6 +163,10 @@ $.fn.jinplace.editors['extra:checkbox_demo'] = {
 	// received will be mapped to 1.
 	displayValue: function(data) {
 		return this.choices[data? 1: 0];
+	},
+
+	finish: function () {
+		$(document).off('touchstart.jip');
 	}
 };
 

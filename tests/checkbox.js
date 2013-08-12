@@ -9,6 +9,7 @@
 	);
 
 	var qfix = $("#qunit-fixture");
+
 	test("Default checked for yes", 2, function() {
 		span.appendTo(qfix).jinplace();
 

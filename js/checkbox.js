@@ -19,16 +19,14 @@ $.fn.jinplace.editors['extra:checkbox'] = {
 
 		var field = $('<input type=checkbox>');
 
-		var ios = navigator.userAgent.match(/(ipad|ipod|iphone)/i);
-		var stopSubmit = false;
-
 		// Set up events. Complicated by chrome/safari not dealing with focus on
 		// checkbox elements as other browsers do.
 		field   .on('click', function(ev) {ev.stopPropagation(); })
 				.on('change', function(ev) {field.focus(); })
 		;
 
-		if (ios) {
+		if (navigator.userAgent.match(/(ipad|ipod|iphone)/i)) {
+			var stopSubmit = false;
 			field.on('touchstart', function(ev) {
 				stopSubmit = true;
 				setTimeout(function () {
@@ -44,7 +42,6 @@ $.fn.jinplace.editors['extra:checkbox'] = {
 							element.find('form').trigger('submit');
 					});
 		}
-
 
 		this.blurEvent(field, field, 'submit');
 
